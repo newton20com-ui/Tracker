@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MonTrackerBAC — Tracker BAC Terminale D Burkina Faso</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050507;--s1:#0c0c10;--s2:#121217;--s3:#1a1a22;--s4:#22222c;
+  --b1:#2a2a38;--b2:#383848;
+  --gold:#e8a020;--gold2:#f5b840;--gold3:#ffd060;--gd:rgba(232,160,32,0.1);
+  --green:#00c896;--gn:rgba(0,200,150,0.1);
+  --blue:#4488ff;--bn:rgba(68,136,255,0.1);
+  --purple:#9966ff;--pn:rgba(153,102,255,0.1);
+  --red:#ff4455;--rn:rgba(255,68,85,0.1);
+  --text:#f0f0f8;--m1:#404055;--m2:#606075;--m3:#9090a8;
+  --r:10px;
+  --fs:'Syne',sans-serif;--fb:'Space Grotesk',sans-serif;--fm:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-text-size-adjust:100%;-webkit-overflow-scrolling:touch;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 0%,rgba(232,160,32,0.06) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 35% at 80% 100%,rgba(0,200,150,0.05) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 30% at 100% 30%,rgba(68,136,255,0.04) 0%,transparent 50%);}
+
+/* ════════ HERO ════════ */
+.hero{position:relative;z-index:1;padding:72px 20px 56px;text-align:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--gd);border:1px solid rgba(232,160,32,0.2);border-radius:99px;padding:6px 18px;font-family:var(--fm);font-size:0.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 1.8s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.7)}}
+.hero-title{font-family:var(--fs);font-size:clamp(2.2rem,8vw,4.2rem);font-weight:800;line-height:1.0;letter-spacing:-2px;margin-bottom:20px;}
+.hero-title .accent{background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1rem;color:var(--m3);line-height:1.65;max-width:500px;margin:0 auto 40px;font-weight:300;}
+.hero-proof{display:flex;justify-content:center;align-items:center;gap:28px;flex-wrap:wrap;margin-bottom:48px;}
+.hp-item{display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--m3);}
+.hp-icon{font-size:1rem;}
+.hero-scroll-hint{font-family:var(--fm);font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--m2);animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ════════ OFFERS SECTION ════════ */
+.offers-section{position:relative;z-index:1;padding:56px 16px;max-width:900px;margin:0 auto;}
+.section-eyebrow{font-family:var(--fm);font-size:0.56rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:10px;}
+.section-title{font-family:var(--fs);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:800;letter-spacing:-0.5px;text-align:center;margin-bottom:8px;}
+.section-sub{font-size:0.85rem;color:var(--m3);text-align:center;margin-bottom:36px;line-height:1.6;}
+.offers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}@media(max-width:480px){.offers-grid{grid-template-columns:1fr;}}
+@media(max-width:680px){.offers-grid{grid-template-columns:1fr;}}
+.offer-card{background:var(--s1);border:2px solid var(--b1);border-radius:14px;padding:24px 20px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.offer-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.25s;border-radius:12px;}
+.offer-card:hover{transform:translateY(-4px);}
+.offer-card.selected{transform:translateY(-4px);}
+.offer-card.basic.selected,.offer-card.essentiel.selected{border-color:var(--blue);box-shadow:0 0 0 3px rgba(68,136,255,0.15),0 20px 40px rgba(0,0,0,0.4);}
+.offer-card.premium.selected{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,160,32,0.2),0 20px 40px rgba(0,0,0,0.4);}
+.offer-card.vip.selected{border-color:var(--purple);box-shadow:0 0 0 3px rgba(153,102,255,0.2),0 20px 40px rgba(0,0,0,0.4);}
+.offer-badge{display:inline-block;font-family:var(--fm);font-size:0.52rem;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:14px;font-weight:700;}
+.basic .offer-badge,.essentiel .offer-badge{background:var(--bn);color:var(--blue);}
+.premium .offer-badge{background:var(--gd);color:var(--gold);}
+.vip .offer-badge{background:var(--pn);color:var(--purple);}
+.offer-popular{position:absolute;top:14px;right:14px;font-family:var(--fm);font-size:0.48rem;letter-spacing:2px;text-transform:uppercase;background:var(--gold);color:#000;padding:3px 8px;border-radius:4px;font-weight:700;}
+.offer-name{font-family:var(--fs);font-size:1.1rem;font-weight:800;margin-bottom:4px;}
+.offer-price{font-family:var(--fm);font-size:2rem;font-weight:700;line-height:1;margin-bottom:3px;}
+.basic .offer-price,.essentiel .offer-price{color:var(--blue);}
+.premium .offer-price{color:var(--gold);}
+.vip .offer-price{color:var(--purple);}
+.offer-delay{font-size:0.65rem;color:var(--m2);margin-bottom:18px;}
+.offer-feats{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:20px;}
+.offer-feat{display:flex;align-items:flex-start;gap:7px;font-size:0.76rem;color:var(--m3);line-height:1.4;}
+.feat-check{flex-shrink:0;margin-top:1px;}
+.feat-check.yes{color:var(--green);}
+.feat-check.no{color:var(--m1);}
+.offer-select-btn{width:100%;padding:10px;border-radius:7px;border:1.5px solid;font-family:var(--fm);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;font-weight:700;}
+.basic .offer-select-btn,.essentiel .offer-select-btn{border-color:var(--blue);color:var(--blue);background:transparent;}
+.basic .offer-select-btn:hover,.basic.selected .offer-select-btn,.essentiel .offer-select-btn:hover,.essentiel.selected .offer-select-btn{background:var(--blue);color:#fff;}
+.premium .offer-select-btn{border-color:var(--gold);color:var(--gold);background:transparent;}
+.premium .offer-select-btn:hover,.premium.selected .offer-select-btn{background:var(--gold);color:#000;}
+.vip .offer-select-btn{border-color:var(--purple);color:var(--purple);background:transparent;}
+.vip .offer-select-btn:hover,.vip.selected .offer-select-btn{background:var(--purple);color:#fff;}
+
+/* ════════ FORM SECTION ════════ */
+.form-section{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 16px 80px;}
+.form-divider{height:1px;background:linear-gradient(90deg,transparent,var(--b1),transparent);margin:40px 0;}
+
+/* STEP BAR */
+.stepbar{position:sticky;top:0;z-index:100;background:rgba(5,5,7,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--b1);padding:12px 20px;}
+.stepbar-inner{display:flex;align-items:center;justify-content:space-between;max-width:640px;margin:0 auto;}
+.stepbar-left{display:flex;align-items:center;gap:8px;}
+.stepbar-logo{font-family:var(--fs);font-size:0.85rem;font-weight:800;color:var(--text);}
+.stepbar-logo span{color:var(--gold);}
+.stepbar-right{display:flex;align-items:center;gap:6px;}
+.sb-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:0.5rem;color:var(--m2);transition:all 0.3s;position:relative;}
+.sb-dot::after{content:'';position:absolute;right:-6px;top:50%;width:6px;height:1px;background:var(--b2);}
+.sb-dot:last-child::after{display:none;}
+.sb-dot.active{border-color:var(--gold);background:var(--gold);color:#000;font-weight:700;}
+.sb-dot.done{border-color:var(--green);background:var(--green);color:#000;}
+
+/* STEP */
+.fstep{display:none;}
+.fstep.active{display:block;animation:fadeUp 0.3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* STEP HEADER */
+.shdr{margin-bottom:24px;padding-top:32px;}
+.shdr-tag{font-family:var(--fm);font-size:0.52rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.shdr-title{font-family:var(--fs);font-size:1.7rem;font-weight:800;letter-spacing:-0.5px;line-height:1.1;}
+.shdr-sub{font-size:0.82rem;color:var(--m3);margin-top:7px;line-height:1.55;font-weight:300;}
+
+/* SELECTED OFFER BAR */
+.selected-offer-bar{display:flex;align-items:center;justify-content:space-between;background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:12px 16px;margin-bottom:20px;}
+.sob-left{display:flex;align-items:center;gap:10px;}
+.sob-badge{font-family:var(--fm);font-size:0.52rem;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:700;}
+.sob-name{font-size:0.82rem;font-weight:600;}
+.sob-price{font-family:var(--fm);font-size:0.85rem;color:var(--gold);}
+.sob-change{font-family:var(--fm);font-size:0.52rem;letter-spacing:1px;text-transform:uppercase;color:var(--m2);cursor:pointer;border:none;background:none;transition:color 0.15s;}
+.sob-change:hover{color:var(--text);}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:20px;margin-bottom:12px;}
+.card-title{font-family:var(--fm);font-size:0.54rem;letter-spacing:3px;text-transform:uppercase;color:var(--m2);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--b1);}
+
+/* FIELDS */
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:440px){.frow{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field.full{grid-column:1/-1;}
+.field label{font-family:var(--fm);font-size:0.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--m3);}
+.req{color:var(--gold);margin-left:2px;}
+.field input,.field select,.field textarea{
+  background:var(--s2);border:1.5px solid var(--b1);border-radius:7px;
+  color:var(--text);font-family:var(--fb);font-size:16px;
+  padding:10px 13px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;width:100%;
+  -webkit-appearance:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,160,32,0.07);}
+.field textarea{resize:vertical;min-height:72px;line-height:1.5;-webkit-appearance:none;}
+.field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M5 6L0 0h10z' fill='%23a1a1aa' /%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
+.field small{font-size:0.62rem;color:var(--m2);line-height:1.4;}
+input[type=range]{-webkit-appearance:none;height:4px;background:var(--b1);border-radius:99px;cursor:pointer;border:none;padding:0;box-shadow:none;width:100%;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);box-shadow:0 0 8px rgba(232,160,32,0.4);}
+.range-row{display:flex;justify-content:space-between;font-family:var(--fm);font-size:0.52rem;color:var(--m2);margin-top:3px;}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.chip{padding:6px 14px;border:1.5px solid var(--b2);border-radius:6px;font-size:0.73rem;cursor:pointer;transition:all 0.15s;background:transparent;color:var(--m3);}
+.chip:hover{border-color:var(--gold);color:var(--text);}
+.chip.on{background:var(--gd);border-color:var(--gold);color:var(--gold);font-weight:600;}
+
+/* MAT TABLE */
+.mat-wrap{overflow-x:auto;margin-bottom:10px;border-radius:8px;border:1px solid var(--b1);}
+.mat-table{width:100%;border-collapse:collapse;min-width:500px;}
+.mat-table th{font-family:var(--fm);font-size:0.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--m2);padding:9px 10px;border-bottom:1px solid var(--b1);text-align:left;background:var(--s2);}
+.mat-table td{padding:5px 7px;border-bottom:1px solid rgba(42,42,56,0.5);}
+.mat-table tr:last-child td{border-bottom:none;}
+.mat-table tr:hover td{background:rgba(42,42,56,0.3);}
+.mat-table input,.mat-table select{background:var(--s3);border:1px solid var(--b1);border-radius:5px;color:var(--text);font-family:var(--fb);font-size:0.77rem;padding:6px 8px;width:100%;outline:none;transition:border-color 0.15s;}
+.mat-table input:focus,.mat-table select:focus{border-color:var(--gold);}
+.btn-add{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:0.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:none;border:1.5px dashed rgba(232,160,32,0.3);border-radius:7px;padding:8px 14px;cursor:pointer;transition:all 0.15s;margin-top:8px;}
+.btn-add:hover{background:var(--gd);}
+.btn-rm{background:none;border:none;color:var(--m1);cursor:pointer;padding:3px 6px;font-size:0.8rem;transition:color 0.15s;border-radius:4px;}
+.btn-rm:hover{color:var(--red);}
+
+/* TIME GRID */
+.time-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:7px;}
+@media(max-width:380px){.time-grid{grid-template-columns:repeat(4,1fr);}}
+.tslot{padding:10px 4px;border:1.5px solid var(--b1);border-radius:6px;text-align:center;cursor:pointer;font-family:var(--fm);font-size:0.55rem;color:var(--m2);transition:all 0.15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
+.tslot:hover{border-color:var(--gold);color:var(--text);}
+.tslot.on{background:var(--s3);border-color:var(--gold);color:var(--gold);}
+
+/* FEATURES */
+.feat-item{display:flex;align-items:flex-start;gap:10px;padding:12px 13px;background:var(--s2);border:1.5px solid var(--b1);border-radius:8px;cursor:pointer;transition:all 0.15s;margin-bottom:7px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.feat-item:hover{border-color:var(--gold);}
+.feat-item.on{border-color:var(--gold);background:var(--gd);}
+.feat-item.locked{cursor:default;opacity:0.7;}
+.feat-item.locked:hover{border-color:var(--b1);}
+.feat-cb{width:17px;height:17px;border:2px solid var(--b2);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.58rem;transition:all 0.15s;margin-top:1px;}
+.feat-item.on .feat-cb{background:var(--gold);border-color:var(--gold);color:#000;}
+.feat-item.locked .feat-cb{background:var(--green);border-color:var(--green);color:#000;}
+.feat-body{flex:1;}
+.feat-label{font-size:0.8rem;line-height:1.3;}
+.feat-desc{font-size:0.65rem;color:var(--m2);margin-top:2px;line-height:1.4;}
+.feat-tag-locked{font-family:var(--fm);font-size:0.48rem;padding:2px 7px;border-radius:3px;background:var(--gn);color:var(--green);margin-left:6px;}
+
+/* SWATCHES */
+.swatches{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px;}
+.sw{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.15s;position:relative;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.sw.on{border-color:var(--text);transform:scale(1.2);}
+.sw.on::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:0.62rem;color:white;font-weight:700;}
+
+/* INCLUDED FEATURES BOX */
+.included-box{background:linear-gradient(135deg,rgba(0,200,150,0.06),transparent);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:16px;margin-bottom:14px;}
+.ib-title{font-family:var(--fm);font-size:0.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px;}
+.ib-list{display:flex;flex-direction:column;gap:6px;}
+.ib-item{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--m3);}
+.ib-check{color:var(--green);font-size:0.7rem;flex-shrink:0;}
+
+/* PAYMENT */
+.pay-box{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:18px;margin-bottom:14px;}
+.pay-number{font-family:var(--fm);font-size:1.4rem;color:var(--gold);font-weight:700;margin:6px 0 3px;}
+.pay-name{font-size:0.72rem;color:var(--m3);}
+.pay-steps{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.ps-row{display:flex;gap:10px;font-size:0.78rem;color:var(--m3);align-items:flex-start;line-height:1.4;}
+.ps-n{font-family:var(--fm);font-size:0.6rem;color:var(--gold);min-width:16px;font-weight:700;margin-top:1px;}
+
+/* ORDER SUMMARY */
+.summary-card{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:16px;margin-bottom:14px;}
+.sum-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--b1);font-size:0.82rem;}
+.sum-row:last-child{border-bottom:none;margin-top:4px;font-weight:700;font-size:0.92rem;}
+.sum-val{color:var(--gold);font-family:var(--fm);}
+
+/* NAV */
+.fnav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:18px;border-top:1px solid var(--b1);}
+.btn-back{font-family:var(--fm);font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;background:none;border:1.5px solid var(--b2);color:var(--m2);padding:10px 18px;border-radius:7px;cursor:pointer;transition:all 0.15s;}
+.btn-back:hover{border-color:var(--m3);color:var(--text);}
+.btn-next{font-family:var(--fm);font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;background:var(--gold);border:none;color:#000;padding:12px 24px;border-radius:7px;cursor:pointer;transition:all 0.15s;font-weight:700;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.btn-next:hover{background:var(--gold2);}
+.btn-submit{font-family:var(--fm);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;background:var(--green);border:none;color:#000;padding:13px 28px;border-radius:7px;cursor:pointer;transition:all 0.15s;font-weight:700;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.btn-submit:hover{opacity:0.88;}
+.btn-submit:disabled{opacity:0.4;cursor:not-allowed;}
+.step-ct{font-family:var(--fm);font-size:0.52rem;color:var(--m2);}
+
+/* CONFIRMATION */
+.conf{display:none;text-align:center;padding:72px 20px;max-width:520px;margin:0 auto;position:relative;z-index:1;}
+.conf-icon{font-size:4rem;margin-bottom:20px;}
+.conf-title{font-family:var(--fs);font-size:2rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;}
+.conf-sub{font-size:0.88rem;color:var(--m3);line-height:1.6;margin-bottom:28px;}
+.conf-box{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px;margin-bottom:14px;text-align:left;}
+.conf-box-title{font-family:var(--fm);font-size:0.5rem;letter-spacing:3px;text-transform:uppercase;color:var(--m2);margin-bottom:12px;}
+.cbox-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--b1);font-size:0.8rem;}
+.cbox-row:last-child{border-bottom:none;}
+.cbox-val{color:var(--gold);font-family:var(--fm);font-size:0.78rem;}
+.next-steps{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:16px;text-align:left;}
+.ns-title{font-family:var(--fm);font-size:0.5rem;letter-spacing:3px;text-transform:uppercase;color:var(--m2);margin-bottom:12px;}
+.ns-item{display:flex;gap:10px;font-size:0.78rem;color:var(--m3);margin-bottom:7px;line-height:1.4;}
+.ns-n{font-family:var(--fm);font-size:0.58rem;color:var(--gold);min-width:16px;font-weight:700;}
+
+/* LOADER */
+.loader-ov{display:none;position:fixed;inset:0;background:rgba(5,5,7,0.9);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:14px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.loader-ov.show{display:flex;}
+.spin{width:38px;height:38px;border:3px solid var(--b2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-txt{font-family:var(--fm);font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--m3);}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:16px;right:16px;max-width:380px;margin:0 auto;padding:12px 16px;border-radius:8px;font-family:var(--fm);font-size:0.68rem;z-index:1000;transform:translateY(14px);opacity:0;transition:all 0.3s;pointer-events:none;text-align:center;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{background:var(--green);color:#000;}
+.toast.err{background:var(--red);color:#fff;}
+
+/* ════════ FAQ ════════ */
+.faq-section{position:relative;z-index:1;padding:56px 16px;max-width:680px;margin:0 auto;}
+.faq-list{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.faq-item{background:var(--s1);border:1px solid var(--b1);border-radius:12px;overflow:hidden;transition:border-color 0.2s;}
+.faq-item.open{border-color:rgba(232,160,32,0.3);}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;gap:14px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.faq-q-text{font-size:0.88rem;font-weight:600;line-height:1.3;}
+.faq-icon{font-family:var(--fm);font-size:1rem;color:var(--gold);flex-shrink:0;transition:transform 0.3s;line-height:1;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
+.faq-item.open .faq-a{max-height:400px;}
+.faq-a-inner{padding:14px 18px 16px;font-size:0.82rem;color:var(--m3);line-height:1.7;border-top:1px solid var(--b1);}
+.faq-a-inner strong{color:var(--text);}
+
+/* ════════ PROGRAMME COLLE ════════ */
+.prog-paste-card{background:rgba(232,160,32,0.04);border:1px solid rgba(232,160,32,0.25);border-radius:12px;padding:18px;margin-top:14px;}
+.prog-paste-title{font-family:var(--fm);font-size:0.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.prog-paste-title::after{content:'';flex:1;height:1px;background:rgba(232,160,32,0.2);}
+
+/* TESTIMONIALS */
+.testi-wrap{background:var(--s1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);padding:48px 16px;}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;max-width:900px;margin:16px auto 0;}
+.testi-card{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:16px;}
+.testi-stars{color:var(--gold);font-size:0.75rem;margin-bottom:8px;letter-spacing:2px;}
+.testi-text{font-size:0.77rem;line-height:1.55;color:var(--m3);margin-bottom:10px;font-style:italic;}
+.testi-name{font-family:var(--fm);font-size:0.52rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;}
+
+/* ════════ iOS SAFARI FIXES ════════ */
+@supports (-webkit-touch-callout: none) {
+  .stepbar { position: -webkit-sticky; position: sticky; }
+  .field input, .field select, .field textarea { font-size: 16px !important; }
+  .mat-table input, .mat-table select { font-size: 16px !important; }
+  body { -webkit-overflow-scrolling: touch; }
+  .chip, .tslot, .feat-item, .offer-card { cursor: pointer; }
+}
+</style>
+</head>
+<body>
+
+<div class="loader-ov" id="loaderOv"><div class="spin"></div><div class="loader-txt">Envoi en cours...</div></div>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero">
+  <div class="hero-eyebrow"><div class="live-dot"></div>Service actif — Livraison sous 24h</div>
+  <h1 class="hero-title">Le tracker BAC Terminale D<br><span class="accent">qui travaille pour toi</span></h1>
+  <p class="hero-sub">Spécialement conçu pour les élèves de Terminale D au Burkina Faso. Décris ton profil, on te construit un tracker complet adapté à ton programme officiel.</p>
+  <div class="hero-proof">
+    <div class="hp-item"><span class="hp-icon">✦</span> 100% personnalisé</div>
+    <div class="hp-item"><span class="hp-icon">⚡</span> Livré en 24h</div>
+    <div class="hp-item"><span class="hp-icon">📱</span> Sur WhatsApp</div>
+    <div class="hp-item"><span class="hp-icon">💳</span> Mobile Money</div>
+  </div>
+  <div class="hero-scroll-hint">↓ Choisis ton offre</div>
+</section>
+
+<!-- ════════ TESTIMONIALS ════════ -->
+<div class="testi-wrap">
+  <div class="section-eyebrow">Ils ont commandé</div>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Mon tracker a complètement changé ma façon de réviser. Je sais exactement quoi travailler chaque jour."</div><div class="testi-name">Aminata K. — BAC D, Ouaga</div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Le design est magnifique et les chapitres correspondent parfaitement à mon programme officiel."</div><div class="testi-name">Moussa T. — BAC C, Abidjan</div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"J'ai pris l'offre VIP. Le tracker couvre tout : révisions, sport, . C'est mon outil de vie."</div><div class="testi-name">Fatou D. — BAC A, Dakar</div></div>
+  </div>
+</div>
+
+<!-- ════════ OFFERS ════════ -->
+<section class="offers-section" id="offersSection">
+  <div class="section-eyebrow">Nos offres</div>
+  <h2 class="section-title">Choisis ton tracker</h2>
+  <p class="section-sub">Trois niveaux de personnalisation pour les élèves de Terminale D au Burkina Faso. Chaque offre inclut le suivi santé, le  et les erreurs fréquentes.</p>
+
+  <div class="offers-grid">
+    <!-- ESSENTIEL -->
+    <div class="offer-card essentiel" id="offer-essentiel" onclick="selectOffer('essentiel')">
+      <div class="offer-badge">Essentiel</div>
+      <div class="offer-name">Démarrage</div>
+      <div class="offer-price">1 000</div>
+      <div class="offer-delay">FCFA · 24h</div>
+      <ul class="offer-feats">
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Suivi notes + chapitres</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Planning journalier</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Santé & sport quotidien</li>
+                <li class="offer-feat"><span class="feat-check yes">✓</span>Erreurs fréquentes</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>BAC TRACKER by OUMAR</li>
+        <li class="offer-feat"><span class="feat-check no">✗</span><span style="color:var(--m1)">Code bilan MTB</span></li>
+        <li class="offer-feat"><span class="feat-check no">✗</span><span style="color:var(--m1)">Citations perso</span></li>
+      </ul>
+      <button class="offer-select-btn">Choisir Essentiel</button>
+    </div>
+    <!-- PREMIUM -->
+    <div class="offer-card premium" id="offer-premium" onclick="selectOffer('premium')">
+      <div class="offer-popular">⭐ Populaire</div>
+      <div class="offer-badge">Premium</div>
+      <div class="offer-name">Avancé</div>
+      <div class="offer-price">2 000</div>
+      <div class="offer-delay">FCFA · 24h</div>
+      <ul class="offer-feats">
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Tout l'Essentiel</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Nom du client affiché</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Code bilan MTB</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>3 citations personnalisées</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Bilan hebdo + historique</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>by OUMAR sous le nom</li>
+        <li class="offer-feat"><span class="feat-check no">✗</span><span style="color:var(--m1)">Image de fond perso</span></li>
+      </ul>
+      <button class="offer-select-btn">Choisir Premium</button>
+    </div>
+    <!-- VIP -->
+    <div class="offer-card vip" id="offer-vip" onclick="selectOffer('vip')">
+      <div class="offer-badge">VIP</div>
+      <div class="offer-name">Ultime</div>
+      <div class="offer-price">3 500</div>
+      <div class="offer-delay">FCFA · 24h</div>
+      <ul class="offer-feats">
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Tout le Premium</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Image de fond personnalisée</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Nom du client uniquement</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Design sur mesure</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Mise à jour gratuite</li>
+        <li class="offer-feat"><span class="feat-check yes">✓</span>Support prioritaire</li>
+      </ul>
+      <button class="offer-select-btn">Choisir VIP</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FORM ════════ -->
+
+<!-- ════════ FAQ ════════ -->
+<section class="faq-section" id="faqSection">
+  <div class="section-eyebrow">Questions fréquentes</div>
+  <h2 class="section-title">Tu as des questions ?</h2>
+  <p class="section-sub">Tout ce que tu dois savoir avant de commander.</p>
+  <div class="faq-list" id="faqList"></div>
+</section>
+
+<div id="formOuter" style="display:none">
+
+<!-- STEP BAR -->
+<div class="stepbar">
+  <div class="stepbar-inner">
+    <div class="stepbar-left">
+      <div class="stepbar-logo">Mon<span>Tracker</span>BAC</div>
+    </div>
+    <div class="stepbar-right" id="stepDots"></div>
+  </div>
+</div>
+
+<div class="form-section">
+
+<!-- ÉTAPE 1 — PROFIL -->
+<div class="fstep active" id="fs-1">
+  <div class="shdr">
+    <div class="shdr-tag">Étape 01 / 05</div>
+    <div class="shdr-title">Ton profil</div>
+    <div class="shdr-sub">Pour personnaliser ton tracker et te livrer le fichier sur WhatsApp.</div>
+  </div>
+  <div id="sob1"></div>
+  <div class="card">
+    <div class="card-title">Contact & livraison</div>
+    <div class="frow">
+      <div class="field"><label>Prénom <span class="req">*</span></label><input type="text" id="f1" placeholder="Ex: Aminata" maxlength="40"></div>
+      <div class="field"><label>Nom</label><input type="text" id="f2" placeholder="Ex: Kaboré" maxlength="40"></div>
+    </div>
+    <div class="frow">
+      <div class="field"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="f3" placeholder="+226 70 00 00 00"><small>📱 Tu reçois ton tracker ici</small></div>
+      <div class="field"><label>Email <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif)</span></label><input type="email" id="f4" placeholder="ton@email.com"></div>
+    </div>
+    <div class="frow">
+      <div class="field"><label>Pays <span class="req">*</span></label><input type="text" id="f5" placeholder="Ex: Burkina Faso"></div>
+      <div class="field"><label>Ville</label><input type="text" id="f6" placeholder="Ex: Ouagadougou"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Ton examen</div>
+    <div class="frow">
+      <div class="field"><label>Type <span class="req">*</span></label><input type="text" id="f7" value="BAC" readonly style="background:var(--s3);color:var(--gold);font-weight:700;cursor:default;"></div>
+      <div class="field"><label>Série / Filière <span class="req">*</span></label><input type="text" id="f8" value="D" readonly style="background:var(--s3);color:var(--gold);font-weight:700;cursor:default;"></div>
+    </div>
+    <div class="frow">
+      <div class="field"><label>Date de l'examen <span class="req">*</span></label><input type="date" id="f9"></div>
+      <div class="field"><label>Mention visée <span class="req">*</span></label><select id="f10"><option value="">— Sélectionner —</option><option>Passable (10-12)</option><option>Assez Bien (12-14)</option><option>Bien (14-16)</option><option>Très Bien (16-18)</option><option>Excellence (18+)</option></select></div>
+    </div>
+    <div class="field full"><label>Objectifs après l'examen <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif)</span></label><textarea id="f11" rows="2" placeholder="Ex: Bourse pour étudier à l'étranger, créer une entreprise, grande école..."></textarea></div>
+  </div>
+  <div class="fnav">
+    <div></div>
+    <div style="display:flex;align-items:center;gap:12px;"><div class="step-ct">1 / 5</div><button class="btn-next" onclick="nav(1,2)">Suivant →</button></div>
+  </div>
+</div>
+
+<!-- ÉTAPE 2 — MATIÈRES -->
+<div class="fstep" id="fs-2">
+  <div class="shdr">
+    <div class="shdr-tag">Étape 02 / 05</div>
+    <div class="shdr-title">Tes matières</div>
+    <div class="shdr-sub">Note actuelle, objectif et coefficient. On identifie les priorités automatiquement.</div>
+  </div>
+  <div id="sob2"></div>
+  <div class="card">
+    <div class="card-title">Notes & coefficients</div>
+    <div class="mat-wrap"><table class="mat-table" id="matTable"><thead><tr><th>Matière</th><th style="width:70px">Note /20</th><th style="width:70px">Objectif</th><th style="width:58px">Coeff</th><th style="width:62px">Niveau</th><th style="width:26px"></th></tr></thead><tbody id="matBody"></tbody></table></div>
+    <button class="btn-add" onclick="addMat()">+ Ajouter une matière</button>
+  </div>
+  <div class="card" style="margin-top:12px;">
+    <div class="card-title">Matières prioritaires</div>
+    <div class="field">
+      <label>Quelles matières te posent le plus de problèmes ? <span class="req">*</span></label>
+      <div class="chips" id="priorityChips" style="margin-top:6px;"></div>
+      <small style="margin-top:6px;">Sélectionne les matières où tu as le plus de retard. On leur allouera plus de temps dans ton planning.</small>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Programme de révision</div>
+    <div class="field"><label>Tu as la liste de tes chapitres ? <span class="req">*</span></label>
+      <div class="chips">
+        <div class="chip" id="pg-oui" onclick="setProg('oui')">✓ Oui, je les connais</div>
+        <div class="chip" id="pg-partiel" onclick="setProg('partiel')">◑ En partie</div>
+        <div class="chip on" id="pg-non" onclick="setProg('non')">✗ Non — générer pour moi</div>
+      </div>
+      <small style="margin-top:6px">Si non, on génère le programme complet selon les chapitres officiels de ta série.</small>
+    </div>
+    <div id="chapBox" style="display:none;margin-top:14px">
+      <div class="field">
+        <label>Tes chapitres <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(un par ligne ou séparés par virgule)</span></label>
+        <button type="button" class="btn-add" onclick="loadOfficialChapters()" style="margin-bottom:10px;width:100%;justify-content:center;">
+          ✦ Charger les chapitres officiels BAC D Burkina
+        </button>
+        <textarea id="f_chap" rows="8" placeholder="Clique sur le bouton ci-dessus pour charger les chapitres officiels, ou saisis les tiens manuellement..."></textarea>
+        <small>✦ Basé sur les manuels Pyramide, Harmattan, Passeport et Collection Nonaba</small>
+      </div>
+    </div>
+    <div style="margin-top:14px">
+      <div class="prog-paste-card">
+        <div class="prog-paste-title">📋 Colle ton programme complet ici</div>
+        <div class="field">
+          <label>Programme / Syllabus officiel <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif mais recommandé)</span></label>
+          <textarea id="f_programme_complet" rows="10" style="font-family:var(--fm);font-size:0.75rem;line-height:1.6;" placeholder="Colle ici ton programme officiel, le contenu de ton manuel, la liste de tes cours, ou n'importe quel texte décrivant ce que tu dois réviser.&#10;&#10;Exemple :&#10;MATHÉMATIQUES&#10;Chapitre 1 : Suites numériques — suites arithmétiques, géométriques, convergence&#10;Chapitre 2 : Nombres complexes — forme algébrique, trigonométrique, module&#10;...&#10;&#10;PHYSIQUE&#10;Chapitre 1 : Cinématique — vecteur vitesse, accélération&#10;...&#10;&#10;Plus tu donnes de détails, plus ton tracker sera précis et adapté."></textarea>
+          <small>✦ Ce contenu sera utilisé directement pour construire ton tracker — chapitres, notions, exercices types.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fnav">
+    <button class="btn-back" onclick="nav(2,1)">← Retour</button>
+    <div style="display:flex;align-items:center;gap:12px;"><div class="step-ct">2 / 5</div><button class="btn-next" onclick="nav(2,3)">Suivant →</button></div>
+  </div>
+</div>
+
+<!-- ÉTAPE 3 — PLANNING -->
+<div class="fstep" id="fs-3">
+  <div class="shdr">
+    <div class="shdr-tag">Étape 03 / 05</div>
+    <div class="shdr-title">Ton planning</div>
+    <div class="shdr-sub">Un emploi du temps réaliste adapté à ta vraie vie — pas à une vie idéale.</div>
+  </div>
+  <div id="sob3"></div>
+  <div class="card">
+    <div class="card-title">Disponibilités quotidiennes</div>
+    <div class="frow">
+      <div class="field"><label>Heures / jour en semaine</label><input type="range" id="fhs" min="1" max="10" step="0.5" value="4" oninput="document.getElementById('hsl').textContent=this.value+'h'"><div class="range-row"><span>1h</span><span id="hsl" style="color:var(--gold)">4h</span><span>10h</span></div></div>
+      <div class="field"><label>Heures / jour week-end</label><input type="range" id="fhw" min="1" max="14" step="0.5" value="7" oninput="document.getElementById('hwl').textContent=this.value+'h'"><div class="range-row"><span>1h</span><span id="hwl" style="color:var(--gold)">7h</span><span>14h</span></div></div>
+    </div>
+
+  </div>
+  <div class="card">
+    <div class="card-title">Contraintes & préférences</div>
+    <div class="frow">
+      <div class="field"><label>Cours de soutien / répétiteur ?</label><div class="chips" style="margin-top:4px"><div class="chip" id="ap-oui" onclick="setSingle('ap','oui')">Oui</div><div class="chip on" id="ap-non" onclick="setSingle('ap','non')">Non</div></div></div>
+
+    </div>
+    <div class="field"><label>Autres contraintes <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(sport, travail, activités...)</span></label><textarea id="fco" rows="2" placeholder="Ex: Football mardi et vendredi 17h-19h, marché le samedi matin..."></textarea></div>
+
+  </div>
+  <div class="card">
+    <div class="card-title">Devoirs & examens à venir</div>
+    <div class="field">
+      <label>Ajoute tes devoirs ou examens prévus <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif)</span></label>
+      <small style="margin-bottom:10px;display:block;">Ces événements apparaîtront dans ton planning comme tâches à cocher, étiquetés DEVOIR ou EXAMEN.</small>
+      <div id="devoirsList"></div>
+      <button type="button" class="btn-add" onclick="addDevoir()" style="margin-top:6px">+ Ajouter un devoir / examen</button>
+    </div>
+  </div>
+
+  <div class="fnav">
+    <button class="btn-back" onclick="nav(3,2)">← Retour</button>
+    <div style="display:flex;align-items:center;gap:12px;"><div class="step-ct">3 / 5</div><button class="btn-next" onclick="nav(3,4)">Suivant →</button></div>
+  </div>
+</div>
+
+<!-- ÉTAPE 4 — PERSONNALISATION -->
+<div class="fstep" id="fs-4">
+  <div class="shdr">
+    <div class="shdr-tag">Étape 04 / 05</div>
+    <div class="shdr-title">Personnalisation</div>
+    <div class="shdr-sub">Les détails qui font la différence entre un tracker qu'on utilise et un qu'on abandonne.</div>
+  </div>
+  <div id="sob4"></div>
+
+  <div class="included-box">
+    <div class="ib-title">✦ Inclus dans toutes les offres</div>
+    <div class="ib-list">
+      <div class="ib-item"><span class="ib-check">✓</span>Suivi notes + chapitres par matière</div>
+      <div class="ib-item"><span class="ib-check">✓</span>Planning journalier (Maths tous les jours + 1 science + 1 littéraire)</div>
+            <div class="ib-item"><span class="ib-check">✓</span>Bilan hebdomadaire + erreurs fréquentes</div>
+      <div class="ib-item"><span class="ib-check">✓</span>Citations de grands personnages (Tyson, César, Musk...)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Options supplémentaires</div>
+    <div id="featList"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Style visuel</div>
+    <div class="frow">
+      <div class="field"><label>Thème</label><div class="chips"><div class="chip on" id="th-dark" onclick="setSingle('th','dark')">🌑 Sombre</div><div class="chip" id="th-light" onclick="setSingle('th','light')">☀️ Clair</div></div></div>
+      <div class="field"><label>Couleur principale</label><div class="swatches" id="colorSw"></div></div>
+    </div>
+    <div class="field" style="margin-top:10px"><label>Ambiance <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif)</span></label><input type="text" id="fins" placeholder="Ex: style épuré, militaire, académique, coloré..."></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Motivation personnelle</div>
+    <div class="field"><label>Tes citations préférées <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif)</span></label><textarea id="fcit" rows="3" placeholder="Ex: «Ne comptez pas les jours, faites que les jours comptent» — Muhammad Ali&#10;«Le succès c'est aller d'échec en échec sans perdre son enthousiasme» — Churchill..."></textarea></div>
+    <div class="field" style="margin-top:10px"><label>Ton mantra personnel <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif)</span></label><input type="text" id="fman" placeholder="Ex: Je travaille pendant qu'ils dorment."></div>
+  </div>
+
+  <div class="fnav">
+    <button class="btn-back" onclick="nav(4,3)">← Retour</button>
+    <div style="display:flex;align-items:center;gap:12px;"><div class="step-ct">4 / 5</div><button class="btn-next" onclick="nav(4,5)">Suivant →</button></div>
+  </div>
+</div>
+
+<!-- ÉTAPE 5 — PAIEMENT -->
+<div class="fstep" id="fs-5">
+  <div class="shdr">
+    <div class="shdr-tag">Étape 05 / 05</div>
+    <div class="shdr-title">Paiement & envoi</div>
+    <div class="shdr-sub">Dernière étape. Effectue le paiement Mobile Money et confirme ta commande.</div>
+  </div>
+  <div id="sob5"></div>
+
+  <div class="card">
+    <div class="card-title">Récapitulatif commande</div>
+    <div id="orderSummary"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Paiement Mobile Money</div>
+    <div class="pay-box">
+      <div style="font-family:var(--fm);font-size:0.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--m2);">Envoie au numéro</div>
+      <div class="pay-number">+226 74 31 35 52</div>
+      <div class="pay-name">Au nom de : Adigun</div>
+      <div id="payAmount" style="font-family:var(--fm);font-size:1.1rem;color:var(--green);margin-top:6px;font-weight:700;"></div>
+      <div class="pay-steps">
+        <div class="ps-row"><span class="ps-n">01</span>Envoie le montant de ton offre sur <strong style="color:var(--text)">Orange Money</strong> au numéro ci-dessus</div>
+        <div class="ps-row"><span class="ps-n">02</span>Note la <strong style="color:var(--text)">référence de transaction</strong> fournie par l'opérateur</div>
+        <div class="ps-row"><span class="ps-n">03</span>Remplis les champs ci-dessous et clique <strong style="color:var(--text)">Envoyer ma commande</strong></div>
+        <div class="ps-row"><span class="ps-n">04</span>Tu reçois ton tracker personnalisé sur WhatsApp <strong style="color:var(--gold)">sous 24 heures</strong></div>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="field"><label>Référence de transaction <span class="req">*</span></label><input type="text" id="ftx" placeholder="Ex: OG20260317XXXXX"><small>Le code fourni après l'envoi</small></div>
+      <div class="field"><label>Opérateur</label><input type="text" id="fop" value="Orange Money" readonly style="background:var(--s3);color:var(--gold);font-weight:700;cursor:default;"></div>
+    </div>
+    <div class="field" style="margin-top:8px"><label>Message libre <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:0.55rem">(facultatif)</span></label><textarea id="fmsg" rows="2" placeholder="Toute précision supplémentaire pour ton tracker..."></textarea></div>
+  </div>
+
+  <div class="fnav">
+    <button class="btn-back" onclick="nav(5,4)">← Retour</button>
+    <div style="display:flex;align-items:center;gap:12px;"><div class="step-ct">5 / 5</div><button class="btn-submit" id="submitBtn" onclick="submitOrder()">✦ Envoyer ma commande</button></div>
+  </div>
+</div>
+
+</div><!-- /form-section -->
+</div><!-- /formOuter -->
+
+<!-- ════════ CONFIRMATION ════════ -->
+<div class="conf" id="confPage">
+  <div class="conf-icon">✦</div>
+  <h2 class="conf-title">Commande reçue !</h2>
+  <p class="conf-sub">Merci <strong id="conf_prenom"></strong>. On a bien reçu ta commande. Ton tracker <strong id="conf_offre"></strong> arrive sur WhatsApp sous <strong>24 heures</strong>.</p>
+  <div class="conf-box">
+    <div class="conf-box-title">Récapitulatif</div>
+    <div class="cbox-row"><span>Offre</span><span class="cbox-val" id="conf_offre2"></span></div>
+    <div class="cbox-row"><span>Examen</span><span class="cbox-val" id="conf_exam"></span></div>
+    <div class="cbox-row"><span>WhatsApp livraison</span><span class="cbox-val" id="conf_wa"></span></div>
+    <div class="cbox-row"><span>Réf. paiement</span><span class="cbox-val" id="conf_ref"></span></div>
+    <div class="cbox-row"><span>Montant</span><span class="cbox-val" id="conf_prix"></span></div>
+  </div>
+  <div class="next-steps">
+    <div class="ns-title">Prochaines étapes</div>
+    <div class="ns-item"><span class="ns-n">1</span>Vérification de ton paiement (quelques heures)</div>
+    <div class="ns-item"><span class="ns-n">2</span>Création de ton tracker 100% personnalisé</div>
+    <div class="ns-item"><span class="ns-n">3</span>Livraison sur ton WhatsApp sous 24h</div>
+    <div class="ns-item"><span class="ns-n">4</span>Support disponible : +226 74 31 35 52</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  ⚙ CONFIG GOOGLE SHEETS — ISAAC MODIFIE ICI
+// ══════════════════════════════════════════════
+const CFG = {
+  // Colle ici l'URL de ton Google Apps Script après déploiement
+  // Guide complet en bas de fichier
+  SHEETS_URL: 'https://script.google.com/macros/s/AKfycbwAMI11P9Gzq_1oiM3gTRJ5ZvBiCCRNlsFGML51682as9XyjiR-6dkJrfEktdJHG9dxuQ/exec',
+
+  PAYMENT_NUMBER: '+226 74 31 35 52',
+  PAYMENT_NAME: 'Adigun',
+  SUPPORT_WA: '22674313552',
+};
+
+// ══════════════════════════════════════════════
+//  OFFRES
+// ══════════════════════════════════════════════
+const OFFERS = {
+  essentiel: {name:'Essentiel', price:'1 000 FCFA', amount:1000, color:'var(--blue)',   badge:'Essentiel'},
+  premium:   {name:'Premium',   price:'2 000 FCFA', amount:2000, color:'var(--gold)',   badge:'Premium'},
+  vip:       {name:'VIP',       price:'3 500 FCFA', amount:3500, color:'var(--purple)', badge:'VIP'},
+};
+
+// ══════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════
+const MATS = [
+  {n:'Mathématiques',note:'',cible:'16',coeff:'5',niv:'faible'},
+  {n:'Physique-Chimie',note:'',cible:'16',coeff:'4',niv:'faible'},
+  {n:'Sciences de la Vie et de la Terre',note:'',cible:'16',coeff:'4',niv:'faible'},
+  {n:'Philosophie',note:'',cible:'13',coeff:'2',niv:'moyen'},
+  {n:'Histoire-Géographie',note:'',cible:'13',coeff:'2',niv:'moyen'},
+  {n:'Anglais',note:'',cible:'14',coeff:'2',niv:'moyen'},
+  {n:'Français',note:'',cible:'13',coeff:'2',niv:'moyen'},
+  {n:'Éducation Physique & Sportive',note:'',cible:'14',coeff:'1',niv:'moyen'},
+];
+
+const CHAPTERS_BAC_D = {
+  maths: [
+    // Analyse — Pyramide Terminale D & Passeport BAC D
+    "Suites numériques : suites arithmétiques, géométriques, limites, convergence",
+    "Courbes paramétrées : vecteur dérivé, équations, cinématique",
+    "Statistiques à deux variables : nuage de points, ajustement affine, corrélation",
+    "Fonctions numériques : limites, continuité, théorème des valeurs intermédiaires",
+    "Dérivation : règles, tableau de variations, extrema",
+    "Primitives et calcul intégral : définition, propriétés, applications géométriques",
+    "Équations différentielles : y\' - ay = 0, y\' + ay = b, y\'\' + ω²y = 0",
+    // Algèbre — Collection Nonaba & Harmattan
+    "Nombres complexes : forme algébrique, trigonométrique, exponentielle, module, argument",
+    "Fonctions logarithme népérien : définition, propriétés, dérivée, équations",
+    "Fonctions exponentielles : définition, propriétés, dérivée, équations",
+    "Fonctions puissance : définition, propriétés, dérivée",
+    // Géométrie
+    "Probabilités : variable aléatoire discrète, loi binomiale, espérance, variance",
+    "Géométrie dans l\'espace : vecteurs, droites, plans, produit scalaire, produit vectoriel",
+    "Géométrie analytique : équation de plan, distance, projection"
+  ],
+  physique_chimie: [
+    // Mécanique — Pyramide PC Terminale D
+    "Cinématique : vecteurs position, vitesse, accélération — mouvement rectiligne et circulaire",
+    "Lois de Newton : principe d\'inertie, 2ème loi, 3ème loi, applications",
+    "Travail et énergie : travail d\'une force, théorème énergie cinétique, énergie potentielle",
+    "Gravitation universelle : loi de Newton, champ gravitationnel, satellites",
+    "Particules chargées dans champ électrique : déviation, trajectoire",
+    "Particules chargées dans champ magnétique : force de Lorentz, trajectoire circulaire",
+    "Oscillations mécaniques libres : pendule simple, ressort-masse, équation différentielle",
+    // Électricité — Harmattan Sciences Physiques Tle D
+    "Condensateur : charge, décharge, énergie stockée, circuit RC",
+    "Bobine inductive : circuit RL, énergie magnétique",
+    "Oscillations électriques libres et forcées : circuit LC, résonance",
+    // Physique nucléaire — Passeport BAC D
+    "Noyau atomique : composition, isotopes, défaut de masse, énergie de liaison",
+    "Radioactivité : loi de décroissance, demi-vie, types de rayonnements",
+    "Réactions nucléaires : fission, fusion, applications énergétiques",
+    // Chimie générale — Collection Nonaba Chimie
+    "Solutions aqueuses : concentration molaire, massique, dilution",
+    "Réactions acido-basiques : pH, couples acide-base, constante Ka, force des acides",
+    "Réactions d\'oxydoréduction : couples ox/red, équilibrage, pile électrochimique",
+    // Chimie organique — Pyramide Chimie Tle D
+    "Alcools : nomenclature, classification, oxydation, estérification",
+    "Aldéhydes et cétones : nomenclature, propriétés, réactions de reconnaissance",
+    "Acides carboxyliques et dérivés : estérification, hydrolyse, saponification"
+  ],
+  svt: [
+    // Biologie cellulaire — Harmattan SVT Tle D
+    "La cellule : composition chimique, ultrastructure (MEB, MET), organites",
+    "Métabolisme cellulaire : respiration, fermentation, photosynthèse",
+    "Division cellulaire : mitose, méiose, rôles biologiques",
+    // Génétique — Nonaba SVT & Passeport BAC D
+    "Génétique mendélienne : lois de Mendel, monohybridisme, dihybridisme",
+    "Génétique chromosomique : travaux de Morgan, linkage, cartes factorielles",
+    "Hérédité liée au sexe : chromosomes sexuels, maladies liées au sexe, pédigrées",
+    "Mutations : types, causes, conséquences génétiques et médicales",
+    "Génie génétique : ADN recombinant, PCR, OGM, applications médicales",
+    // Reproduction — Pyramide SVT
+    "Reproduction humaine : anatomie, gamétogenèse, cycles hormonaux",
+    "Fécondation, développement embryonnaire, accouchement",
+    "Régulation hormonale : axe hypothalamo-hypophyso-gonadique",
+    // Système nerveux — Collection Nonaba
+    "Tissu nerveux : neurone, glie, potentiel de repos, potentiel d\'action",
+    "Transmission synaptique : synapses chimiques et électriques, neurotransmetteurs",
+    "Réflexes médullaires : arc réflexe, réflexe myotatique et achilléen",
+    "Système nerveux central : cerveau, moelle épinière, réflexes conditionnels",
+    // Physiologie — Harmattan SVT
+    "Activité cardiaque : révolution cardiaque, ECG, régulation nerveuse et hormonale",
+    "Immunologie : immunité innée, immunité adaptative, anticorps, vaccins, VIH/SIDA",
+    "Milieu intérieur : homéostasie, osmorégulation, rein et formation de l\'urine",
+    "Endocrinologie : glandes endocrines, hormones, rétrocontrôle"
+  ],
+  philo: [
+    // Notions — Pyramide Philo Tle D & Harmattan Philosophie
+    "La conscience et l\'inconscient : définitions, Freud, liberté et déterminisme",
+    "La perception et la connaissance : illusions, empirisme vs rationalisme",
+    "Le langage : fonctions, langage et pensée, langage animal vs humain",
+    "La vérité : critères, vérité scientifique, vérité philosophique, relativisme",
+    "La raison et l\'expérience : méthode scientifique, raisonnement, démonstration",
+    "La liberté : libre arbitre, déterminisme, liberté politique et morale",
+    "L\'existence et la mort : condition humaine, angoisse, sens de la vie",
+    "Le bonheur : plaisir, vertu, stoïcisme, épicurisme, eudémonisme",
+    "Le droit et la justice : droit naturel, droit positif, équité, injustice",
+    "L\'État et la société : contrat social, pouvoir, légitimité, démocratie",
+    "Le travail et la technique : aliénation, progrès, rapport homme-nature",
+    "La religion : foi vs raison, sacré, critique de la religion",
+    "L\'art et le beau : mimesis, création, jugement esthétique, art africain",
+    "Autrui : reconnaissance, altérité, intersubjectivité",
+    "Histoire et mémoire : progrès, répétition, identité historique"
+  ],
+  histoire_geo: [
+    // Histoire — Nonaba HG Tle D & Passeport BAC Burkina
+    "Les grandes civilisations africaines précoloniales : Ghana, Mali, Songhoï, Mossi",
+    "La traite négrière et l\'esclavage : causes, conséquences démographiques et économiques",
+    "La colonisation en Afrique : partage de Berlin, résistances, administration coloniale",
+    "Les indépendances africaines : mouvements nationalistes, décolonisation (1950-1970)",
+    "L\'évolution politique du Burkina Faso depuis 1960 : République, régimes militaires",
+    "La Révolution du 4 août 1983 : Thomas Sankara, politique, bilan et dérives",
+    "L\'Afrique contemporaine : conflits, coopération, Union africaine, défis",
+    "La Seconde Guerre mondiale : causes, belligérants, bilan, conséquences",
+    "La Guerre froide et la bipolarisation : URSS vs USA, décolonisation, Non-Alignés",
+    "L\'ONU et les relations internationales depuis 1945 : rôle, limites, réformes",
+    "Les grandes puissances au XXIème siècle : USA, Chine, Russie, Europe",
+    // Géographie — Pyramide HG & Harmattan Géo
+    "La mondialisation : définition, acteurs, flux, inégalités Nord-Sud",
+    "L\'Union Européenne : construction, institutions, élargissement, défis",
+    "La Chine : émergence économique, géopolitique, relations avec l\'Afrique",
+    "Le Nigéria : géant africain, économie pétrolière, défis de développement",
+    "Le Burkina Faso : géographie, économie, ressources naturelles, développement",
+    "Les migrations internationales : causes, flux Afrique-Europe, conséquences",
+    "L\'environnement et le développement durable : changements climatiques, ressources"
+  ],
+  anglais: [
+    // Thèmes — Programme officiel Tle C/D Burkina & Passeport Anglais
+    "Unit 1 — Lifestyles : population, health, gender equality, poverty",
+    "Unit 2 — Freedom and Civil Rights : slavery, civil rights movement, democracy",
+    "Unit 3 — Development Issues : poverty, urbanization, agriculture, education",
+    "Unit 4 — What the Future Holds : science, technology, AI, space exploration",
+    "Unit 5 — Managing Resources : environment, energy, sustainable development",
+    "Unit 6 — Contemporary Africa : challenges, progress, African identity, diaspora",
+    // Grammaire — Collection Nonaba Anglais
+    "Tenses : Simple Present/Past, Present/Past Perfect, Future forms, Conditionals",
+    "Modal verbs : can/could, may/might, must/should, would, shall",
+    "Passive voice : formation, usage, transformation active/passive",
+    "Reported speech : direct vs indirect, transformations",
+    "Relative clauses : who, which, that, whose, where",
+    "Word order et structures : affirmative, negative, interrogative, emphasis"
+  ],
+  francais: [
+    // Méthodologie — Pyramide Français Tle D & Harmattan Lettres
+    "Contraction de texte : règles, étapes, reformulation fidèle",
+    "Discussion : thèse, antithèse, synthèse, connecteurs logiques",
+    "Dissertation littéraire : plan dialectique, analytique, exemples",
+    "Commentaire composé : axes d\'analyse, figures de style, conclusion",
+    // Genres littéraires
+    "La poésie : versification, figures de style, mouvements poétiques",
+    "Le roman africain : thèmes, auteurs majeurs (Mongo Beti, Oyono, Sembène)",
+    "Le théâtre : genres dramatiques, procédés, texte et représentation",
+    "La littérature francophone : négritude, Senghor, Césaire, enjeux identitaires"
+  ],
+  eps: [
+    "Athlétisme : courses (vitesse, demi-fond), sauts, lancers — règles et techniques",
+    "Sports collectifs : football, basketball, handball, volleyball — règles officielles",
+    "Gymnastique : exercices au sol, agrès, figures imposées",
+    "Sports de raquette : tennis de table — règles, techniques de base",
+    "Natation : nages codifiées, techniques, règles de compétition",
+    "Évaluation pratique : critères de notation, conditions du BAC"
+  ]
+};
+
+const SLOTS = ['0h-1h','1h-2h','2h-3h','3h-4h','4h-5h','5h-6h','6h-7h','7h-8h','8h-9h','9h-10h','10h-11h','11h-12h','12h-13h','13h-14h','14h-15h','15h-16h','16h-17h','17h-18h','18h-19h','19h-20h','20h-21h','21h-22h','22h-23h','23h-0h'];
+
+const FEATS_BASIC = [
+  {l:'Graphique evolution des notes',d:'Voir ta progression semaine par semaine'},
+  {l:'Bilan hebdomadaire + historique',d:'Analyse de chaque semaine'},
+  {l:'Revision espacee automatique',d:'Rappels J+1, J+3, J+7 pour memoriser'},
+];
+const FEATS_PREMIUM = [
+  {l:'Ton prenom affiche dans le tracker',d:'Tracker personnalise a ton nom'},
+  {l:'Code bilan MTB',d:'Envoie ton rapport a OUMAR pour analyse'},
+  {l:'Citations personnalisees',d:'Tes propres citations dans le dashboard'},
+];
+const FEATS_VIP = [
+  {l:'Image de fond personnalisee',d:'Ta propre image en fond dans tout le tracker'},
+  {l:'Accompagnement personnel OUMAR',d:'Programme sur mesure + mises a jour gratuites'},
+  {l:'Support WhatsApp prioritaire',d:'Conseils et ajustements rapides'},
+];
+
+const COLORS = [
+  {h:'#e8a020',n:'Or'},{h:'#ef4444',n:'Rouge'},{h:'#00c896',n:'Vert'},
+  {h:'#4488ff',n:'Bleu'},{h:'#9966ff',n:'Violet'},{h:'#f97316',n:'Orange'},
+  {h:'#ec4899',n:'Rose'},{h:'#06b6d4',n:'Cyan'},
+];
+
+const STEP_LABELS = ['Profil','Matières','Planning','Style','Commande'];
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+let curStep=1, selectedOffer='', mats=[...MATS.map(m=>({...m}))], selPriority=[];
+let progOpt='non', selSlots=['5h-6h','20h-21h','21h-22h'];
+let selFeats=[], selColor='#e8a020';
+
+// ══════════════════════════════════════════════
+//  SELECT OFFER
+// ══════════════════════════════════════════════
+function selectOffer(key) {
+  selectedOffer = key;
+  document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('offer-'+key)?.classList.add('selected');
+
+  // Update button text
+  ['essentiel','premium','vip'].forEach(k => {
+    const btn = document.querySelector(`#offer-${k} .offer-select-btn`);
+    if(btn) btn.textContent = k===key ? '✓ Sélectionné' : `Choisir ${k.charAt(0).toUpperCase()+k.slice(1)}`;
+  });
+
+  // Scroll to form & show it
+  setTimeout(()=>{
+    document.getElementById('formOuter').style.display='block';
+    document.getElementById('formOuter').scrollIntoView({behavior:'smooth',block:'start'});
+    renderFeats();
+    renderStepDots();
+  },300);
+}
+
+// ══════════════════════════════════════════════
+//  OFFER BAR (shown in each step)
+// ══════════════════════════════════════════════
+function renderOfferBars() {
+  if(!selectedOffer) return;
+  const o = OFFERS[selectedOffer];
+  const html = `<div class="selected-offer-bar">
+    <div class="sob-left">
+      <span class="sob-badge" style="background:${selectedOffer==='essentiel'?'var(--bn)':selectedOffer==='premium'?'var(--gd)':'var(--pn)'};color:${o.color}">${o.badge}</span>
+      <span class="sob-name">${o.name}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="sob-price">${o.price}</span>
+      <button class="sob-change" onclick="changeOffer()">Changer</button>
+    </div>
+  </div>`;
+  ['1','2','3','4','5'].forEach(n => {
+    const el = document.getElementById('sob'+n);
+    if(el) el.innerHTML = html;
+  });
+}
+
+function changeOffer() {
+  document.getElementById('formOuter').style.display='none';
+  document.getElementById('offersSection').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ══════════════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════════════
+function nav(from, to) {
+  if(to===3) setTimeout(renderDevoirs, 50);
+  if(to > from && !validate(from)) return;
+  if(!selectedOffer && to > 1) { toast('Sélectionne une offre d\'abord','err'); return; }
+  document.getElementById('fs-'+from).classList.remove('active');
+  curStep = to;
+  document.getElementById('fs-'+to).classList.add('active');
+  if(to===5) buildSummary();
+  renderStepDots();
+  renderOfferBars();
+  document.getElementById('stepDots')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  const sb=document.querySelector('.stepbar');if(sb)window.scrollTo({top:sb.offsetTop,behavior:'smooth'});
+}
+
+function validate(step) {
+  if(step===1){
+    const fields = [g('f1'),g('f3'),g('f5'),g('f7'),g('f8'),g('f9'),g('f10')];
+    if(fields.some(f=>!f)){toast('Remplis tous les champs obligatoires (*)','err');return false;}
+  }
+  if(step===5){if(!g('ftx')){toast('Entre la référence de ta transaction','err');return false;}}
+  return true;
+}
+
+// ══════════════════════════════════════════════
+//  STEP DOTS
+// ══════════════════════════════════════════════
+function renderStepDots() {
+  document.getElementById('stepDots').innerHTML = STEP_LABELS.map((l,i) =>
+    `<div class="sb-dot ${i+1===curStep?'active':i+1<curStep?'done':''}" title="${l}">${i+1<curStep?'✓':i+1}</div>`
+  ).join('');
+}
+
+// ══════════════════════════════════════════════
+//  MATIÈRES
+// ══════════════════════════════════════════════
+function renderMats() {
+  document.getElementById('matBody').innerHTML = mats.map((m,i) => `
+    <tr>
+      <td><input value="${m.n}" onchange="mats[${i}].n=this.value" placeholder="Matière" style="font-weight:600;"></td>
+      <td><input type="number" value="${m.note}" min="0" max="20" step="0.5" onchange="mats[${i}].note=this.value" placeholder="?"></td>
+      <td><input type="number" value="${m.cible}" min="0" max="20" step="0.5" onchange="mats[${i}].cible=this.value"></td>
+      <td><input type="number" value="${m.coeff}" min="1" max="10" onchange="mats[${i}].coeff=this.value"></td>
+      <td><select onchange="mats[${i}].niv=this.value">
+        <option value="faible" ${m.niv==='faible'?'selected':''}>😰 Faible</option>
+        <option value="moyen" ${m.niv==='moyen'?'selected':''}>😐 Moyen</option>
+        <option value="fort" ${m.niv==='fort'?'selected':''}>💪 Fort</option>
+      </select></td>
+      <td><button class="btn-rm" onclick="rmMat(${i})">✕</button></td>
+    </tr>`).join('');
+}
+
+function loadOfficialChapters(){
+  const lines = [];
+  const subjMap = {
+    'Mathématiques': 'maths',
+    'Physique-Chimie': 'physique_chimie',
+    'Sciences de la Vie et de la Terre': 'svt',
+    'Philosophie': 'philo',
+    'Histoire-Géographie': 'histoire_geo',
+    'Anglais': 'anglais',
+    'Français': 'francais',
+    'Éducation Physique & Sportive': 'eps',
+  };
+  mats.filter(m=>m.n).forEach(m=>{
+    const key = subjMap[m.n];
+    if(key && CHAPTERS_BAC_D[key]){
+      lines.push('== ' + m.n.toUpperCase() + ' ==');
+      CHAPTERS_BAC_D[key].forEach(c => lines.push('- ' + c));
+      lines.push('');
+    }
+  });
+  document.getElementById('f_chap').value = lines.join('\n');
+  toast('Chapitres officiels chargés ✓ — tu peux modifier si besoin');
+}
+
+function addMat(){mats.push({n:'',note:'',cible:'12',coeff:'2',niv:'moyen'});renderMats();renderPriorityChips();}
+function rmMat(i){mats.splice(i,1);renderMats();renderPriorityChips();}
+
+function renderPriorityChips(){
+  const el = document.getElementById('priorityChips');
+  if(!el) return;
+  const names = mats.filter(m=>m.n).map(m=>m.n);
+  el.innerHTML = names.map(n => {
+    const isOn = selPriority.includes(n);
+    return `<div class="chip ${isOn?'on':''}" onclick="togglePriority('${n}',this)">${n}</div>`;
+  }).join('');
+}
+
+function togglePriority(name, el){
+  const idx = selPriority.indexOf(name);
+  if(idx>-1) selPriority.splice(idx,1); else selPriority.push(name);
+  el.classList.toggle('on');
+}
+
+// ══════════════════════════════════════════════
+//  PROGRAMME
+// ══════════════════════════════════════════════
+function setProg(o){
+  progOpt=o;
+  ['oui','partiel','non'].forEach(x=>document.getElementById('pg-'+x).classList.toggle('on',x===o));
+  document.getElementById('chapBox').style.display=o!=='non'?'block':'none';
+}
+
+// ══════════════════════════════════════════════
+//  SLOTS
+// ══════════════════════════════════════════════
+function renderSlots(){
+  document.getElementById('timeGrid').innerHTML = SLOTS.map(s =>
+    `<div class="tslot ${selSlots.includes(s)?'on':''}" onclick="toggleSlot('${s}',this)">${s}</div>`
+  ).join('');
+}
+function toggleSlot(s,el){
+  selSlots.includes(s)?selSlots=selSlots.filter(x=>x!==s):selSlots.push(s);
+  el.classList.toggle('on');
+}
+
+// ══════════════════════════════════════════════
+//  FEATURES
+// ══════════════════════════════════════════════
+function renderFeats() {
+  if(!selectedOffer) return;
+  const el = document.getElementById('featList');
+  let html = '';
+
+  // Always-included (locked)
+  const always = [
+      {l:'Section santé & sport',d:'Entraînement, eau, sommeil'},
+    {l:'',d:'Simulation des conditions réelles'},
+    {l:'Erreurs fréquentes par chapitre',d:'Note tes blocages pour y revenir'},
+    {l:'Citations motivantes + mantra',d:'Tes propres citations affichées chaque jour'},
+  ];
+  always.forEach(f => {
+    html += `<div class="feat-item locked on">
+      <div class="feat-cb">✓</div>
+      <div class="feat-body">
+        <div class="feat-label">${f.l} <span class="feat-tag-locked">Inclus</span></div>
+        <div class="feat-desc">${f.d}</div>
+      </div>
+    </div>`;
+  });
+
+  // Offer-specific options
+  const opts = (selectedOffer==='basic'||selectedOffer==='essentiel') ? FEATS_BASIC :
+               selectedOffer==='premium' ? [...FEATS_BASIC,...FEATS_PREMIUM] :
+               [...FEATS_BASIC,...FEATS_PREMIUM,...FEATS_VIP];
+
+  opts.forEach((f,i) => {
+    const isOn = selFeats.includes(i);
+    html += `<div class="feat-item ${isOn?'on':''}" onclick="toggleFeat(${i},this)">
+      <div class="feat-cb">${isOn?'✓':''}</div>
+      <div class="feat-body">
+        <div class="feat-label">${f.l}</div>
+        <div class="feat-desc">${f.d}</div>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+function toggleFeat(i,el){
+  const idx=selFeats.indexOf(i);idx>-1?selFeats.splice(idx,1):selFeats.push(i);
+  el.classList.toggle('on');el.querySelector('.feat-cb').textContent=el.classList.contains('on')?'✓':'';
+}
+
+// ══════════════════════════════════════════════
+//  COLORS
+// ══════════════════════════════════════════════
+function renderColors(){
+  document.getElementById('colorSw').innerHTML = COLORS.map(c =>
+    `<div class="sw ${c.h===selColor?'on':''}" style="background:${c.h}" title="${c.n}" onclick="pickColor('${c.h}',this)"></div>`
+  ).join('');
+}
+function pickColor(h,el){
+  selColor=h;
+  document.querySelectorAll('#colorSw .sw').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// ══════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════
+function g(id){return document.getElementById(id)?.value?.trim()||'';}
+function setSingle(grp,val){document.querySelectorAll(`[id^="${grp}-"]`).forEach(el=>el.classList.toggle('on',el.id===`${grp}-${val}`));}
+function toast(msg,type='ok'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+// ══════════════════════════════════════════════
+//  ORDER SUMMARY
+// ══════════════════════════════════════════════
+function buildSummary(){
+  const o=OFFERS[selectedOffer];
+  const rows=[
+    ['Offre',o.badge],
+    ['Examen',`${g('f7')} série ${g('f8')}`],
+    ['Mention visée',g('f10')],
+    ['Matières',mats.filter(m=>m.n).length+' matières'],
+    ['Programme',progOpt==='non'?'Génération automatique':'Chapitres fournis'],
+    ['Thème',document.getElementById('th-dark')?.classList.contains('on')?'Sombre':'Clair'],
+    ['Livraison sur',g('f3')],
+    ['Total',o.price],
+  ];
+  const pa=document.getElementById('payAmount');if(pa)pa.textContent='Montant à envoyer : '+o.price;
+  document.getElementById('orderSummary').innerHTML=`<div class="summary-card">${rows.map(r=>`<div class="sum-row"><span>${r[0]}</span><span class="sum-val">${r[1]}</span></div>`).join('')}</div>`;
+}
+
+
+
+function toggleScheduleRequired(show){
+  document.getElementById('sched-yes')?.classList.toggle('on', show);
+  document.getElementById('sched-no')?.classList.toggle('on', !show);
+  const grid = document.getElementById('dayByDayGrid');
+  if(grid) grid.style.display = show ? 'block' : 'none';
+  if(show) renderDayByDay();
+}
+
+// ════════ PLANNING JOUR PAR JOUR ════════
+const DAYS_OF_WEEK = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const SLOT_OPTIONS = ['4h-5h','5h-6h','6h-7h','7h-8h','8h-9h','9h-10h','10h-11h','11h-12h','12h-13h','13h-14h','14h-15h','15h-16h','16h-17h','17h-18h','18h-19h','19h-20h','20h-21h','21h-22h','22h-23h','23h-0h'];
+let selDaySlots = {Lundi:[],Mardi:[],Mercredi:[],Jeudi:[],Vendredi:[],Samedi:[],Dimanche:[]};
+
+function renderDayByDay(){
+  const el = document.getElementById('dayByDayGrid');
+  if(!el) return;
+  el.innerHTML = DAYS_OF_WEEK.map(day => `
+    <div style="margin-bottom:12px;background:var(--s2);border:1px solid var(--b1);border-radius:8px;padding:11px;">
+      <div style="font-family:var(--fm);font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">${day}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;" id="slots_${day}">
+        ${SLOT_OPTIONS.map(s => `<div class="tslot ${(selDaySlots[day]||[]).includes(s)?'on':''}" onclick="toggleDaySlot('${day}','${s}',this)" style="padding:5px 6px;font-size:0.52rem;">${s}</div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function toggleDaySlot(day,slot,el){
+  if(!selDaySlots[day]) selDaySlots[day]=[];
+  const idx=selDaySlots[day].indexOf(slot);
+  if(idx>-1) selDaySlots[day].splice(idx,1);
+  else selDaySlots[day].push(slot);
+  el.classList.toggle('on');
+}
+
+function getDaySlotsSummary(){
+  const grid = document.getElementById('dayByDayGrid');
+  if(grid && grid.style.display === 'none') return 'Programme fourni par le client';
+  return DAYS_OF_WEEK.map(d => `${d}: ${(selDaySlots[d]||[]).join(', ')||'—'}`).join(' | ');
+}
+
+// ══════════════════════════════════════════════
+//  COLLECT DATA
+// ══════════════════════════════════════════════
+function collect(){
+  const o=OFFERS[selectedOffer];
+  const opts = (selectedOffer==='basic'||selectedOffer==='essentiel') ? FEATS_BASIC :
+               selectedOffer==='premium' ? [...FEATS_BASIC,...FEATS_PREMIUM] :
+               [...FEATS_BASIC,...FEATS_PREMIUM,...FEATS_VIP];
+  // Format matières lisible dans Sheets
+  const matsFormatted = mats.filter(m=>m.n).map(m=>
+    `${m.n}: ${m.note||'?'}/20 → obj ${m.cible}/20 | coeff ${m.coeff} | ${m.niv}`
+  ).join('\n');
+
+  return {
+    // ── IDENTIFICATION ──
+    'A_TIMESTAMP':        new Date().toLocaleString('fr-FR'),
+    'B_STATUT':           '🆕 À TRAITER',
+    'C_OFFRE':            o.badge,
+    'D_PRIX':             o.price,
+
+    // ── CLIENT ──
+    'E_PRENOM':           g('f1'),
+    'F_NOM':              g('f2'),
+    'G_WHATSAPP':         g('f3'),
+    'H_EMAIL':            g('f4'),
+    'I_PAYS':             g('f5'),
+    'J_VILLE':            g('f6'),
+
+    // ── EXAMEN ──
+    'K_EXAMEN':           g('f7'),
+    'L_SERIE':            g('f8'),
+    'M_DATE_EXAMEN':      g('f9'),
+    'N_MENTION_VISEE':    g('f10'),
+    'O_OBJECTIFS':        g('f11'),
+
+    // ── MATIÈRES ──
+    'P_MATIERES':         matsFormatted,
+    "Q_PROGRAMME_OPTION": progOpt==="non"?"Generer automatiquement":progOpt==="oui"?"Fourni complet":"Partiel",
+    'R_CHAPITRES':        g('f_chap'),
+    'S_PROGRAMME_COLLE':  g('f_programme_complet'),
+
+    // ── PLANNING ──
+    'T_HEURES_SEMAINE':   document.getElementById('fhs')?.value+'h/jour',
+    'U_HEURES_WEEKEND':   document.getElementById('fhw')?.value+'h/jour',
+    'V_CRENEAUX':         document.getElementById('fhs')?.value ? document.getElementById('fhs').value+'h/jour semaine, '+document.getElementById('fhw').value+'h/jour weekend' : 'Non renseigné',
+    'W_APPUI_COURS':      document.getElementById('ap-oui')?.classList.contains('on')?'Oui':'Non',
+    'Y_CONTRAINTES':      g('fco'),
+    'Z_DEVOIRS':          getDevoirs(),
+
+    // ── PERSONNALISATION ──
+    'ZB_OPTIONS_CHOISIES': selFeats.map(i=>opts[i]?.l||'').join(' | '),
+    'ZC_THEME':           document.getElementById('th-dark')?.classList.contains('on')?'Sombre':'Clair',
+    'ZD_COULEUR':         selColor,
+    'ZE_INSPIRATION':     g('fins'),
+    'ZF_CITATIONS':       g('fcit'),
+    'ZG_MANTRA':          g('fman'),
+
+    // ── PAIEMENT ──
+    'ZH_TX_REFERENCE':    g('ftx'),
+    'ZI_OPERATEUR':       g('fop'),
+    'ZJ_MESSAGE_CLIENT':  g('fmsg'),
+
+    // ── PROMPT PRÊT À L'EMPLOI ──
+    'ZZ_PROMPT_CLAUDE': genPrompt(o, mats, progOpt, selFeats, selSlots, opts),
+  };
+}
+
+function genPrompt(o, mats, progOpt, selFeats, selSlots, opts){
+  const matsStr = mats.filter(m=>m.n).map(m=>
+    `- ${m.n} : ${m.note||'?'}/20 -> obj ${m.cible}/20 | coeff ${m.coeff} | ${m.niv}`
+  ).join('\n');
+
+  const featsStr = selFeats.map(i=>opts[i]?.l||'').filter(Boolean).map(f=>`- ${f}`).join('\n') || '- Aucune option supplementaire';
+
+  const appui = document.getElementById('ap-oui')?.classList.contains('on')?'Oui':'Non';
+  const theme = document.getElementById('th-dark')?.classList.contains('on')?'Sombre':'Clair';
+  const progOpt2 = progOpt==='non'?'Generer automatiquement':progOpt==='oui'?'Fourni complet':'Partiel';
+
+  return `Tu es un expert en developpement web. Cree un fichier HTML unique, complet et autonome - un tracker de revision BAC personnalise et operationnel.
+
+PROFIL CLIENT :
+- Prenom : ${g('f1')} ${g('f2')}
+- Examen : ${g('f7')} serie ${g('f8')}
+- Pays : ${g('f5')} - ${g('f6')}
+- Mention visee : ${g('f10')}
+- Date examen : ${g('f9')}
+- Objectifs : ${g('f11')||'Non renseigne'}
+
+MATIERES & NOTES :
+${matsStr}
+
+MATIERES PRIORITAIRES (les plus faibles) :
+${selPriority.length>0?selPriority.map(p=>"- "+p).join("\n"):"- Deduire automatiquement selon les notes"}
+
+PROGRAMME :
+Option : ${progOpt2}
+Chapitres fournis (manuels Pyramide, Harmattan, Passeport, Nonaba) :
+${g('f_chap')||'Aucun - generer selon programme officiel BAC D Burkina Faso'}
+Programme colle : ${g('f_programme_complet')||'Aucun'}
+
+PLANNING :
+- Heures/semaine : ${document.getElementById('fhs')?.value}h/jour
+- Heures/week-end : ${document.getElementById('fhw')?.value}h/jour
+- Creneaux par jour :
+${Object.entries(selDaySlots).map(([d,s])=>d+': '+(s.join(', ')||'repos')).join('\n')}
+- Appui cours : ${appui}
+- Contraintes : ${g('fco')||'Aucune'}
+- Devoirs & examens a venir :
+${getDevoirs()}
+
+FONCTIONNALITES OBLIGATOIRES (toutes les offres) :
+- Suivi sante & sport quotidien
+- 
+- Erreurs frequentes par chapitre
+- Citations motivantes + mantra : ${g('fman')||'Non renseigne'}
+- Citations : ${g('fcit')||'Non renseignees'}
+
+OPTIONS SUPPLEMENTAIRES CHOISIES :
+${featsStr}
+
+DESIGN :
+- Theme : ${theme}
+- Couleur principale : ${selColor}
+- Inspiration : ${g('fins')||'Premium dark moderne'}
+
+OFFRE : ${o.badge}
+
+INSTRUCTIONS :
+- Fichier HTML unique tout-en-un
+- localStorage pour sauvegarder les donnees
+- Mobile-first, fonctionne hors ligne
+- Design premium et memorable
+- Planning journalier avec chapitre exact a travailler
+- Commence directement par <!DOCTYPE html>
+- FONCTIONNALITE OBLIGATOIRE 1 : Quand l utilisateur coche une matiere dans le planning OU un chapitre dans STUDY, cet element doit visuellement se barrer (text-decoration:line-through) ET s estomper (opacity:0.35 + couleur grisee). L etat est sauvegarde en localStorage.
+- FONCTIONNALITE OBLIGATOIRE 2 : Validation automatique de la journee. Quand toutes les taches critiques du jour (matieres scientifiques : Maths, Physique-Chimie, SVT) sont cochees, la journee se valide automatiquement dans le calendrier avec une animation de celebration (emoji confetti ou toast de succes).
+
+FONCTIONNALITES OBLIGATOIRES A IMPLEMENTER :
+
+1. BARRER + ESTOMPER :
+Quand l etudiant coche une matiere dans le planning journalier (onglet PLAN) :
+- Le texte de la matiere devient barre (text-decoration: line-through)
+- L element devient semi-transparent (opacity: 0.4)
+- La couleur passe au gris
+- Un checkmark vert apparait a cote
+Meme comportement pour les chapitres dans l onglet STUDY :
+quand un chapitre passe au statut "maitrise", il se barre et s estompe visuellement.
+
+2. VALIDATION AUTOMATIQUE DE LA JOURNEE :
+Quand toutes les taches critiques du jour sont cochees (les matieres scientifiques :
+Mathematiques, Physique-Chimie, SVT, Chimie), la journee se valide automatiquement :
+- Le jour s affiche en vert dans le calendrier
+- Un toast de felicitation apparait (ex: "Journee validee ! Toutes les sciences faites !")
+- Le streak s incremente automatiquement
+- Pas besoin de cliquer sur le bouton "Valider la journee" manuellement`;
+}
+
+// ══════════════════════════════════════════════
+//  SUBMIT → GOOGLE SHEETS
+// ══════════════════════════════════════════════
+async function submitOrder(){
+  if(!validate(5))return;
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  document.getElementById('loaderOv').classList.add('show');
+  const data=collect();
+
+  // Sauvegarde locale toujours
+  try{
+    const orders=JSON.parse(localStorage.getItem('mtb_orders')||'[]');
+    orders.push(data);localStorage.setItem('mtb_orders',JSON.stringify(orders));
+  }catch(e){}
+
+  // Envoi Google Sheets — méthode formulaire (la plus fiable, fonctionne en local)
+  if(CFG.SHEETS_URL){
+    try{
+      // Crée un iframe caché
+      let iframe = document.getElementById('_gs_iframe');
+      if(!iframe){
+        iframe = document.createElement('iframe');
+        iframe.id = '_gs_iframe';
+        iframe.name = '_gs_iframe';
+        iframe.style.cssText = 'display:none;width:0;height:0;border:none;position:absolute;';
+        document.body.appendChild(iframe);
+      }
+
+      // Crée un formulaire qui cible l'iframe
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = CFG.SHEETS_URL;
+      form.target = '_gs_iframe';
+      form.style.display = 'none';
+      form.enctype = 'application/x-www-form-urlencoded';
+
+      // Ajoute chaque champ
+      Object.entries(data).forEach(([k, v]) => {
+        const inp = document.createElement('input');
+        inp.type = 'hidden';
+        inp.name = k;
+        inp.value = String(v||'').substring(0, 49000); // limite taille
+        form.appendChild(inp);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+
+      // Nettoie après 3s
+      setTimeout(() => {
+        try{ document.body.removeChild(form); }catch(e){}
+      }, 3000);
+
+    }catch(err){ console.warn('Erreur envoi:', err); }
+  }
+
+  // Attendre 3s puis afficher confirmation
+  await new Promise(r => setTimeout(r, 3000));
+  document.getElementById('loaderOv').classList.remove('show');
+  showConf(data);
+}
+
+function showConf(data){
+  document.getElementById('formOuter').style.display='none';
+  document.getElementById('confPage').style.display='block';
+  document.getElementById('conf_prenom').textContent=data.prenom;
+  document.getElementById('conf_offre').textContent=data.offre;
+  document.getElementById('conf_offre2').textContent=data.offre;
+  document.getElementById('conf_exam').textContent=`${data.examen} ${data.serie}`;
+  document.getElementById('conf_wa').textContent=data.whatsapp;
+  document.getElementById('conf_ref').textContent=data.tx_reference;
+  document.getElementById('conf_prix').textContent=data.prix;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+// ══════════════════════════════════════════════
+//  FAQ
+// ══════════════════════════════════════════════
+const FAQ = [
+  {
+    q: "C\u2019est quoi exactement un tracker BAC personnalis\u00e9 ?",
+    a: "C\u2019est un fichier HTML que tu ouvres dans ton navigateur \u2014 sans internet. Il contient ton planning journalier avec les chapitres exacts \u00e0 travailler, le suivi de tes notes, un minuteur de travail, tes chapitres avec statut, la section sport \&amp; sant\u00e9, et tout ce que tu as choisi. Tout est adapt\u00e9 \u00e0 <strong>ta s\u00e9rie, tes mati\u00e8res, ton emploi du temps et tes objectifs</strong>."
+  },
+  {
+    q: "Je n\u2019ai pas de programme de cours \u2014 \u00e7a marche quand m\u00eame ?",
+    a: "Oui, compl\u00e8tement. Si tu n\u2019as pas ta liste de chapitres, tu choisis l\u2019option <strong>G\u00e9n\u00e9rer pour moi</strong> et on cr\u00e9e ton programme bas\u00e9 sur les chapitres officiels de ta s\u00e9rie et de ton pays. R\u00e9sultat identique."
+  },
+  {
+    q: "Comment je re\u00e7ois mon tracker apr\u00e8s commande ?",
+    a: "On te livre directement sur <strong>WhatsApp</strong>. Tu re\u00e7ois un fichier .html. Tu l\u2019ouvres dans ton navigateur Chrome, Firefox ou m\u00eame ton t\u00e9l\u00e9phone \u2014 et c\u2019est pr\u00eat \u00e0 utiliser. Aucune installation, aucun abonnement."
+  },
+  {
+    q: "Quel est le d\u00e9lai de livraison ?",
+    a: "Sous <strong>24 heures</strong> apr\u00e8s v\u00e9rification de ton paiement. En pratique, la plupart des commandes sont livr\u00e9es en moins de 12h. Si tu commandes la nuit, tu re\u00e7ois le matin."
+  },
+  {
+    q: "Quels op\u00e9rateurs Mobile Money acceptez-vous ?",
+    a: "On accepte <strong>Orange Money, Moov Money, Wave et MTN MoMo</strong>. Tu envoies le montant au +226 74 31 35 52 (Adigun), tu notes la r\u00e9f\u00e9rence de transaction, et tu la renseignes dans le formulaire."
+  },
+  {
+    q: "Mon tracker marche sur t\u00e9l\u00e9phone ou seulement sur PC ?",
+    a: "Les deux. Le tracker est <strong>100% responsive</strong> \u2014 il s\u2019adapte \u00e0 l\u2019\u00e9cran de ton t\u00e9l\u00e9phone et \u00e0 celui de ton ordinateur. Tu peux l\u2019utiliser partout, m\u00eame sans connexion internet une fois ouvert."
+  },
+  {
+    q: "Quelle diff\u00e9rence entre Essentiel, Premium et VIP ?",
+    a: "<strong>Essentiel (1 000 FCFA)</strong> : notes, planning, chapitres,  bilan hebdo, citations. <strong>Premium (2 000 FCFA)</strong> : tout l'Essentiel + prénom dans le tracker, code bilan MTB, 3 citations personnalisées. <strong>VIP (3 500 FCFA)</strong> : tout le Premium + image de fond personnalisée, accompagnement OUMAR, support prioritaire."
+  },
+  {
+    q: "Est-ce qu\u2019il y a un remboursement si je ne suis pas satisfait ?",
+    a: "Si ton tracker ne correspond pas \u00e0 ce que tu as command\u00e9, on le <strong>corrige gratuitement</strong>. Contacte-nous sur WhatsApp (+226 74 31 35 52) dans les 48h apr\u00e8s livraison avec tes remarques et on ajuste imm\u00e9diatement."
+  },
+];
+
+function renderFAQ(){
+  const el = document.getElementById('faqList');
+  if(!el) return;
+  el.innerHTML = FAQ.map((item,i) => `
+    <div class="faq-item" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <div class="faq-q-text">${item.q}</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">${item.a}</div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleFAQ(i){
+  const item = document.getElementById('faq-'+i);
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+
+// ════════ DEVOIRS & EXAMENS ════════
+let devoirs = [];
+
+function renderDevoirs(){
+  const el = document.getElementById('devoirsList');
+  if(!el) return;
+  if(!devoirs.length){
+    el.innerHTML = '<div style="font-family:var(--fm);font-size:9px;color:var(--m2);padding:6px 0">Aucun devoir ajouté — clique sur + pour en ajouter</div>';
+    return;
+  }
+  el.innerHTML = devoirs.map((d,i) => `
+    <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--b1);margin-bottom:4px">
+      <input type="text" value="${d.titre}" placeholder="Ex: Devoir de Maths"
+        style="background:var(--s2);border:1.5px solid var(--b1);border-radius:6px;color:var(--text);font-size:14px;padding:7px 10px;outline:none;width:100%;-webkit-appearance:none"
+        onchange="devoirs[${i}].titre=this.value">
+      <input type="date" value="${d.date}"
+        style="background:var(--s2);border:1.5px solid var(--b1);border-radius:6px;color:var(--text);font-size:14px;padding:7px 10px;outline:none;width:100%;-webkit-appearance:none"
+        onchange="devoirs[${i}].date=this.value">
+      <select onchange="devoirs[${i}].type=this.value"
+        style="background:var(--s2);border:1.5px solid var(--b1);border-radius:6px;color:var(--text);font-size:13px;padding:7px 8px;outline:none;-webkit-appearance:none">
+        <option value="DEVOIR" ${d.type==='DEVOIR'?'selected':''}>DEVOIR</option>
+        <option value="EXAMEN" ${d.type==='EXAMEN'?'selected':''}>EXAMEN</option>
+        <option value="CONTROLE" ${d.type==='CONTROLE'?'selected':''}>CONTRÔLE</option>
+        <option value="ORAL" ${d.type==='ORAL'?'selected':''}>ORAL</option>
+      </select>
+      <button onclick="removeDevoir(${i})" style="background:none;border:1px solid rgba(255,68,85,.3);color:var(--red);border-radius:5px;padding:6px 10px;cursor:pointer;font-size:11px;-webkit-tap-highlight-color:transparent">✕</button>
+    </div>`).join('');
+}
+
+function addDevoir(){
+  devoirs.push({titre:'', date:'', type:'DEVOIR'});
+  renderDevoirs();
+}
+
+function removeDevoir(i){
+  devoirs.splice(i,1);
+  renderDevoirs();
+}
+
+function getDevoirs(){
+  const valid = devoirs.filter(d => d.titre.trim());
+  if(!valid.length) return 'Aucun';
+  return valid.map(d => `${d.type} — ${d.titre} — ${d.date||'date non definie'}`).join('\n');
+}
+
+
+renderMats();renderColors();renderStepDots();renderFAQ();renderPriorityChips();renderDevoirs();
+document.getElementById('f9').min=new Date().toISOString().split('T')[0];
+</script>
+
+<!--
+══════════════════════════════════════════════════════════════
+  GUIDE GOOGLE SHEETS — ISAAC, SUIS CES ÉTAPES UNE FOIS
+══════════════════════════════════════════════════════════════
+
+  ÉTAPE 1 : Crée le Google Sheet
+  ─────────────────────────────
+  → Va sur sheets.google.com
+  → Crée un nouveau fichier "Commandes MonTrackerBAC"
+  → Note l'ID dans l'URL : /spreadsheets/d/[TON_ID_ICI]/edit
+
+  ÉTAPE 2 : Crée le script de réception
+  ─────────────────────────────────────
+  → Dans le Sheet : Extensions → Apps Script
+  → Supprime tout → Colle ce code :
+
+  function doPost(e) {
+    try {
+      const data = JSON.parse(e.postData.contents);
+      const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      if (sheet.getLastRow() === 0) {
+        const headers = Object.keys(data);
+        sheet.appendRow(headers);
+        sheet.getRange(1,1,1,headers.length)
+          .setBackground('#050507').setFontColor('#e8a020').setFontWeight('bold');
+      }
+      sheet.appendRow(Object.values(data));
+      return ContentService.createTextOutput('OK');
+    } catch(err) {
+      return ContentService.createTextOutput('ERROR: ' + err);
+    }
+  }
+
+  ÉTAPE 3 : Déploie le script
+  ───────────────────────────
+  → Clique "Déployer" → "Nouveau déploiement"
+  → Type : Application Web
+  → Exécuter en tant que : Moi
+  → Qui a accès : Tout le monde
+  → Clique "Déployer" → Autorise → Copie l'URL
+
+  ÉTAPE 4 : Colle l'URL dans ce fichier
+  ─────────────────────────────────────
+  → Trouve : SHEETS_URL: ''
+  → Remplace par : SHEETS_URL: 'https://script.google.com/...'
+
+  ÉTAPE 5 : Ton workflow quotidien
+  ────────────────────────────────
+  1. Tu ouvres ton Google Sheet → tu vois les nouvelles lignes
+  2. Tu vérifies le paiement sur ton téléphone
+  3. Tu copie les données du client → tu génères son tracker
+  4. Tu envoies le fichier .html sur WhatsApp du client
+  5. ENCAISSÉ ✓
+
+  Pour être alerté par email à chaque commande, ajoute dans le script :
+  MailApp.sendEmail('ton@email.com', '🔔 Commande: '+data.prenom, JSON.stringify(data,null,2));
+
+══════════════════════════════════════════════════════════════
+-->
+</body>
+</html>
