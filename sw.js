@@ -1,7 +1,7 @@
 const CACHE_NAME = 'montrackerbac-v3';
 const urlsToCache = [
   './',
-  './montrackerBAC-final.html',
+  './index.html',
   './manifest.json',
   './icon.svg',
   './icon-192.png',

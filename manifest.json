@@ -2,7 +2,7 @@
   "name": "MonTrackerBAC",
   "short_name": "TrackerBAC",
   "description": "Tracker BAC Terminale D Burkina Faso",
-  "start_url": "./montrackerBAC-final.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#050507",
   "theme_color": "#e8a020",
